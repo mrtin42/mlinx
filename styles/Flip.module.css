@@ -1,0 +1,59 @@
+.flipCard {
+    perspective: 1000px;
+    width: 16rem;
+    height: 16rem;
+    margin: 1rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    .flipCard {
+      width: 90vw;
+      height: 12rem;
+
+    }
+  }
+  
+  .flipCardInner {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+  }
+  
+  .flipCard:hover .flipCardInner {
+    transform: rotateY(180deg);
+  }
+
+  .flipCard:active .flipCardInner {
+    transform: rotateY(0);
+  }
+
+  @media screen and (max-width: 768px) {
+    .flipCard:hover .flipCardInner {
+      transform: rotateY(0);
+    }
+
+    .flipCard:active .flipCardInner {
+      transform: rotateY(180deg);
+    }
+  }
+  
+  .flipCard.flipped .flipCardInner {
+    transform: rotateY(180deg);
+  }
+  
+  .flipCardFront,
+  .flipCardBack {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  .flipCardBack {
+    transform: rotateY(180deg);
+  }
