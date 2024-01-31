@@ -25,7 +25,7 @@ const createLink = async (formData: FormData) => {
         }
     });
     
-    if (exists.slug === slug) { throw new Error("A link with this slug already exists.") };
+    if (exists?.slug === slug) { throw new Error("A link with this slug already exists.") };
 
     const link = await ormServer.link.create({
         data: {
