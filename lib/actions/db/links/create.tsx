@@ -18,6 +18,14 @@ const createLink = async (formData: FormData) => {
     }
     const slug = formData.get("slug") as string;
     const destination = formData.get("destination") as string;
+    
+    const exists = await ormServer.link.findUnique({
+        where: {
+            slug: slug
+        }
+    });
+    
+    if (exists.slug === slug) { throw new Error("A link with this slug already exists.") };
 
     const link = await ormServer.link.create({
         data: {
