@@ -1,0 +1,11 @@
+{
+    // Name this configuration
+    "name": "MLINX.co",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "GitHub.copilot"
+            ]
+        }
+    }
+}
