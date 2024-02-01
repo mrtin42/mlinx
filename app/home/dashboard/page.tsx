@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import ormServer from "@/lib/prisma";
 import updateName from "@/lib/actions/db/profile/name";
 import createLink from "@/lib/actions/db/links/create";
-import toast from 'sonner';
+import { toast } from 'sonner';
 
 export default async function Dashboard() {
     const { user } = await getSession() ?? { user: null };
