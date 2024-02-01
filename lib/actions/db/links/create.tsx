@@ -10,14 +10,14 @@ const createLink = async (formData: FormData) => {
 
     if (!user) {
         // throw new Error("You must provide a valid session to create a link.");
-        return toast.error("You must provide a valid session to create a link.");
+        return ['error', 'please login']
     }
 
     const ownerId = user.sub;
     const requestedUserID = formData.get("ownerId") as string;
     if (ownerId !== requestedUserID) {
         // throw new Error("You are not authorized to create a link for this user.");
-        return toast.error("You are not authorized to create a link for this user.");
+        return ['error', 'this is not your account']
     }
     const slug = formData.get("slug") as string;
     const destination = formData.get("destination") as string;
@@ -29,7 +29,7 @@ const createLink = async (formData: FormData) => {
     });
     
     // if (exists?.slug === slug) { throw new Error("A link with this slug already exists.") };
-    if (exists?.slug === slug) { return toast.error("A link with this slug already exists.") };
+    if (exists?.slug === slug) { return ['error', 'link with this slug already exists' };
 
     const link = await ormServer.link.create({
         data: {
