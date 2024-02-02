@@ -122,7 +122,7 @@ export default async function Dashboard() {
                                         <p className="text-2xl italic font-sans">
                                             Destination: {link.destination}
                                         </p>
-                                        <Link href={`http${process.env.NEXT_PUBLIC_ENV === "development" ? "" : "s"}://${process.env.NEXT_PUBLIC_MAIN_HOSTNAME}/${link.slug}`} className="text-2xl italic font-sans">
+                                        <Link target="_blank" href={`http${process.env.NEXT_PUBLIC_ENV === "development" ? "" : "s"}://${process.env.NEXT_PUBLIC_SHORT_HOSTNAME}/${link.slug}`} className="text-2xl italic font-sans">
                                                 Link: {link.slug}
                                         </Link>
                                     </div>
