@@ -21,7 +21,7 @@ const FormWithToast = () => {
     };
 
     return (
-        <form action={handleSubmit}>
+        <form action={handleSubmit} className='text-black'>
             <input
                 type="text"
                 name="slug"
