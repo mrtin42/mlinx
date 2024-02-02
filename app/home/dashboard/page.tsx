@@ -77,7 +77,7 @@ export default async function Dashboard() {
                             <p className="text-2xl italic font-sans">
                                 Name: {u?.name}
                             </p>
-                            <form action={updateName}>
+                            <form action={updateName} className='text-black'>
                                 <input type="text" name="name" placeholder="New name" className="text-black" />
                                 <input type="hidden" name="sub" value={u?.sub} />
                                 <button type="submit">Update</button>
