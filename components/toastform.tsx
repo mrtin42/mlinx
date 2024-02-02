@@ -3,8 +3,10 @@
 import { useState } from "react";
 import createLink from "@/lib/actions/db/links/create";
 import { toast } from "sonner";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const FormWithToast = () => {
+    const { user } = useUser();
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (fd: FormData) => {
@@ -27,6 +29,11 @@ const FormWithToast = () => {
             <input
                 type="text"
                 name="destination"
+            />
+            <input
+                type="hidden"
+                name="ownerId"
+                value={user?.sub ?? 'achtung'}
             />
             <button type="submit" disabled={loading}>
                 Create Link
