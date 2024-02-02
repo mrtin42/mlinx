@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import ormServer from "@/lib/prisma";
 import updateName from "@/lib/actions/db/profile/name";
 import createLink from "@/lib/actions/db/links/create";
+import FormWithToast from "@/components/toastform";
 
 export default async function Dashboard() {
     const { user } = await getSession() ?? { user: null };
@@ -100,12 +101,13 @@ export default async function Dashboard() {
                                     <h3 className="text-3xl font-bold text-center">
                                         Make a link
                                     </h3>
-                                    <form  action={createLink}>
+                                    {/* <form  action={createLink}>
                                         <input type="text" name="slug" placeholder="Slug" className="text-black" />
                                         <input type="text" name="destination" placeholder="Destination" className="text-black" />
                                         <input type="hidden" name="ownerId" value={u?.sub} />
                                         <button type="submit">Create</button>
-                                    </form>
+                                    </form> */}
+                                    <FormWithToast />
                                 </div>
                                 {l?.length === 0 ? (
                                     <p className="text-2xl italic font-bold font-sans">

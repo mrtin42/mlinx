@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "NEXT_PUBLIC_ENV=development next dev -p 42069",
+    "dev:sch": "NEXT_PUBLIC_ENV=development next dev -p 3000",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
