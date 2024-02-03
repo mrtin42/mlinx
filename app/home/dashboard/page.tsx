@@ -53,84 +53,35 @@ export default async function Dashboard() {
             <Navbar />
             <main className="flex flex-col items-center justify-center min-h-screen w-screen">
                 <div className="flex flex-col items-center justify-center">
-                    <h1 className="text-6xl font-bold text-center">
+                    <h1 className="text-5xl font-bold text-center">
                         Welcome to your dashboard, {u?.name}!
                     </h1>
                     <p className="text-2xl italic font-sans">
                         You can manage your links here.
                     </p>
                 </div>
-                <div className="flex flex-col items-center justify-center">
-                    <Link href="/dashboard/links" className="bg-blue-600 hover:bg-blue-700 text-center rounded-lg hover:rounded-2xl shadow-xl flex flex-row justify-center items-center p-2 mt-2 transition-all duration-300">
-                        Manage your links
-                    </Link>
-                </div>
-                <div data-comment="currently just making a mockup dashboard with a list of the user's links, and a button to add a new link">
-                    <div className="flex flex-col items-center justify-center" data-comment="user profile: name, email, sub, etc.">
-                        <h1 className="text-6xl font-bold text-center">
-                            User Profile
-                        </h1>
-                        <p className="text-2xl italic font-sans">
-                            Your user profile information.
-                        </p>
-                        <div className="flex flex-col items-center justify-center">
-                            <p className="text-2xl italic font-sans">
-                                Name: {u?.name}
-                            </p>
-                            <form action={updateName} className='text-black'>
-                                <input type="text" name="name" placeholder="New name" className="text-black" />
-                                <input type="hidden" name="sub" value={u?.sub} />
-                                <button type="submit">Update</button>
-                            </form>
-                            <p className="text-2xl italic font-sans">
-                                Email: {u?.email}
-                            </p>
-                            <p className="text-2xl italic font-sans">
-                                Sub: {u?.sub}
-                            </p>
+                <div className="rounded-2xl border border-white drop-shadow-md shadow-white bg-black flex flex-col justify-center m-0">
+                    <div className="flex flex-row border-b border-white p-0 m-0">
+                        <div>
+                            <h2 className="font-bold text-xl">Your profile</h2>
                         </div>
-                        <div className="flex flex-col items-center justify-center" data-comment="users links: list of links the user has created">
-                            <h1 className="text-6xl font-bold text-center">
-                                Your Links
-                            </h1>
-                            <p className="text-2xl italic font-sans">
-                                Your links.
-                            </p>
-                            <div className="flex flex-col items-center justify-center">
-                                <div className="flex flex-col items-center justify-center">
-                                    <h3 className="text-3xl font-bold text-center">
-                                        Make a link
-                                    </h3>
-                                    {/* <form  action={createLink}>
-                                        <input type="text" name="slug" placeholder="Slug" className="text-black" />
-                                        <input type="text" name="destination" placeholder="Destination" className="text-black" />
-                                        <input type="hidden" name="ownerId" value={u?.sub} />
-                                        <button type="submit">Create</button>
-                                    </form> */}
-                                    <FormWithToast />
-                                </div>
-                                {l?.length === 0 ? (
-                                    <p className="text-2xl italic font-bold font-sans">
-                                        You have no links.
-                                    </p>
-                                ) : ''}
-                                {l?.map((link) => (
-                                    <div className="flex flex-col items-center justify-center">
-                                        <p className="text-2xl italic font-sans">
-                                            Slug: {link.slug}
-                                        </p>
-                                        <p className="text-2xl italic font-sans">
-                                            Destination: {link.destination}
-                                        </p>
-                                        <Link target="_blank" href={`http${process.env.NEXT_PUBLIC_ENV === "development" ? "" : "s"}://${process.env.NEXT_PUBLIC_SHORT_HOSTNAME}/${link.slug}`} className="text-2xl italic font-sans">
-                                                Link: {link.slug}
-                                        </Link>
-                                    </div>
-                                ))}
+                        <div className='flex flex-row'>
+                            <div>
+                                <h4 className="font-semibold text-md">Name:</h4>
+                                <p className="italic text-md">{u?.name}</p>
                             </div>
                         </div>
+                        <div className='flex flex-row'>
+                            <div>
+                                <h4 className="font-semibold text-md">Email:</h4>
+                                <p className="italic text-md">{u?.email}</p>
+                            </div>
+                        </div>
+                        <div className="flex flex-row">
+                            <p className="italic text-md">Profile editing coming soon</p>
+                        </div>
                     </div>
-                </div>
+                </div> 
             </main>
         </>
     );
