@@ -9,6 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "MLINX.co",
   description: "Reinventing the way we share links",
+  
 };
 
 export default function RootLayout({
@@ -19,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
-        <body className="bg-black text-slate-50">
+        <body className="bg-black text-slate-50" vaul-drawer-wrapper="">
           <Toaster />
           {children}
         </body>

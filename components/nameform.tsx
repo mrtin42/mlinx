@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import createLink from "@/lib/actions/db/links/create";
+import updateName from "@/lib/actions/db/profile/name";
 import { toast } from "sonner";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { DialogClose } from "./ui/dialog";
@@ -14,7 +14,7 @@ const FormWithToast = () => {
 
     const handleSubmit = async (fd: FormData) => {
         setLoading(true);
-        const res = await createLink(fd);
+        const res = await updateName(fd);
         if (res.success) {
             toast.success(res.message);
         } else {
@@ -27,12 +27,7 @@ const FormWithToast = () => {
         <form action={handleSubmit}>
             <input
                 type="text"
-                name="slug"
-                className={inputClasses}
-            />
-            <input
-                type="text"
-                name="destination"
+                name="name"
                 className={inputClasses}
             />
             <input
@@ -42,7 +37,7 @@ const FormWithToast = () => {
             />
             <DialogClose>
                 <button type="submit" disabled={loading} className={`rounded-lg bg-gray-700 hover:bg-slate-600 px-3 py-1 m-4 ${loading ? "cursor-not-allowed bg-slate-400 hover:bg-slate-400" : ""}`}>
-                    Create Link
+                    Update Name
                 </button>
             </DialogClose>
         </form>

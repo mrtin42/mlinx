@@ -1,4 +1,4 @@
-import Navbar from "@/components/main";
+import { SRNavbar } from "@/components/main";
 import Image from "next/image";
 import Link from "next/link";
 import { getSession } from "@auth0/nextjs-auth0";
@@ -7,10 +7,37 @@ import { redirect } from "next/navigation";
 
 export default async function Home() {
   const { user } = await getSession() ?? { user: null };
+  let userinfo: any;
+
+  if (user) {
+    userinfo = await ormServer.profile.findUnique({
+      where: {
+        sub: user.sub,
+      },
+    });
+    if (!userinfo) {
+      await ormServer.profile.create({
+        data: {
+          sub: user.sub,
+          name: user.name,
+          email: user.email,
+        },
+      });
+      userinfo = await ormServer.profile.findUnique({
+        where: {
+          sub: user.sub,
+        },
+      });
+    }
+  } else {
+    userinfo = null;
+  }
+
+  const u = userinfo;
 
   return (
     <>
-      <Navbar />
+      <SRNavbar u={u ? u : null}/>
       <main className="flex min-h-screen flex-col items-center w-screen">
         <div className="flex mt-3 flex-row items-center justify-between">
           <header className="flex flex-col justify-center max-w-[40vw] mr-10">
