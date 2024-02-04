@@ -5,7 +5,7 @@ export const parse = (req: NextRequest) => {
   domain = domain.replace("www.", ""); // remove www. from domain
   if (domain.endsWith(".vercel.app")) {
     // for local development and preview URLs
-    domain = process.env.NEXT_PUBLIC_MAIN_HOSTNAMES?.split(", ")[0] as string;
+    domain = process.env.NEXT_PUBLIC_MAIN_HOSTNAMES as string;
   }
 
   if (domain.includes(":")) {
