@@ -25,10 +25,12 @@ const FormWithToast = () => {
             <input
                 type="text"
                 name="slug"
+                placeholder="Slug (/my-link)"
             />
             <input
                 type="text"
                 name="destination"
+                placeholder="Destination (https://example.com)"
             />
             <input
                 type="hidden"
