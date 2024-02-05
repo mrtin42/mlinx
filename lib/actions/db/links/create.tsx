@@ -27,7 +27,7 @@ const createLink = async (formData: FormData) => {
         }
     }
     const slug = formData.get("slug") as string;
-    const destination = formData.get("destination") as string;
+    let destination = formData.get("destination") as string;
     
     const exists = await ormServer.link.findUnique({
         where: {
@@ -40,6 +40,26 @@ const createLink = async (formData: FormData) => {
         success: false,
         message: "A link with this slug already exists."
     } };
+
+    if (slug === "") {
+        // throw new Error("You must provide a slug for your link.");
+        return {
+            success: false,
+            message: "You must provide a slug for your link."
+        }
+    }
+
+    if (destination === "") {
+        // throw new Error("You must provide a destination for your link.");
+        return {
+            success: false,
+            message: "You must provide a destination for your link."
+        }
+    }
+
+    if (!destination.startsWith("http") || !destination.startsWith("https")) {
+        destination = `https://${destination}`;
+    }
 
     const link = await ormServer.link.create({
         data: {
