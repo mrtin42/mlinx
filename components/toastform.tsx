@@ -37,7 +37,7 @@ const FormWithToast = () => {
                 name="ownerId"
                 value={user?.sub ?? 'achtung'}
             />
-            <button type="submit" disabled={loading}>
+            <button type="submit" disabled={loading} className="m-0">
                 Create Link
             </button>
         </form>
