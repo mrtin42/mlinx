@@ -103,7 +103,7 @@ export function SRNavbar({u}: any) {
                                         {u.name} {process.env.NEXT_PUBLIC_ENV === "development" ? `// Your UID: ${u.sub}`: ''}
                                     </p> */}
                                     <Link href="/dashboard/profile">
-                                        <Image src={u.pfp} alt={u.name} width={40} height={40} className="rounded-full" />
+                                        <Image src={u.picture} alt={u.name} width={40} height={40} className="rounded-full" />
                                     </Link>
                                     <Link href="/dashboard" className="inline-block transition-all duration-150 text-sm px-1 lg:px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-cyan-950 hover:bg-white mt-0">
                                         Dash<span className="hidden md:inline">board</span>
