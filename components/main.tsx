@@ -17,7 +17,7 @@ export default function CSRNav() {
     }, []);
 
     return (
-        <nav className={`flex flex-row justify-between sticky top-0 px-20 transition-all duration-300 bg-black/50 backdrop-blur-sm border-b ${scrolled ? "border-zinc-100/10" : "border-transparent"}`}>
+        <nav className={`flex flex-row justify-between fixed px-20 transition-all duration-300 bg-black/50 backdrop-blur-sm border-b ${scrolled ? "border-zinc-100/10" : "border-transparent"}`}>
             <div className="flex items-center justify-between p-3">
              <Link href="/">
                 <h1 className={`${logo.className} mr-2 text-3xl font-bold text-center`}>
@@ -101,7 +101,10 @@ export function SRNavbar({u}: any) {
                                 <div id="menu" className="flex flex-row items-center justify-center space-x-4">
                                     <p className={`text-sm text-gray-300 italic ${process.env.NEXT_PUBLIC_ENV === 'development' ? 'hidden xl:inline' : 'hidden md:inline'}`}>
                                         {u.name} {process.env.NEXT_PUBLIC_ENV === "development" ? `// Your UID: ${u.sub}`: ''}
-                                    </p>
+                                    </p> */}
+                                    <Link href="/dashboard/profile">
+                                        <Image src={u.pfp} alt={u.name} width={40} height={40} className="rounded-full" />
+                                    </Link>
                                     <Link href="/dashboard" className="inline-block transition-all duration-150 text-sm px-1 lg:px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-cyan-950 hover:bg-white mt-0">
                                         Dash<span className="hidden md:inline">board</span>
                                     </Link>

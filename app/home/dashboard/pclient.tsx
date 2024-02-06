@@ -18,6 +18,7 @@ import {
     DialogTitle,
     DialogDescription,
 } from "@/components/ui/dialog";
+import DashNav from "@/components/dashnav";
 
 export default async function Dashboard({u, l}: any) {
     const createFromMysql = (mysqlString: string) => {
@@ -75,6 +76,7 @@ export default async function Dashboard({u, l}: any) {
     return (
         <>
             <SRNavbar u={u} />
+            <DashNav active="dashboard" />
             <main className="flex flex-col items-center min-h-screen w-screen">
                 <header className="flex flex-col items-center justify-center h-[20vh]">
                     <h1 className="text-5xl font-bold text-center">
