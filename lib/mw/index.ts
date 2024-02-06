@@ -16,8 +16,6 @@ export const LinkMw = async (req: NextRequest, ev: NextFetchEvent): Promise<any>
     // the defaults below will never change and will only work for mlinx.co, not custom domains
     if (domain === 'mlinx.co') {
         if (path === '/') return NextResponse.redirect(`https://${process.env.NEXT_PUBLIC_MAIN_HOSTNAME}`, { status: 307 });
-        if (path === '/test-zzqzy67') return NextResponse.redirect(`https://nextjs.org/docs`, { status: 307 });
-        if (path === '/maker') return NextResponse.redirect(`https://www.martin.blue`, { status: 307 });
     }
 
     if (domain.endsWith('.localhost') || domain.endsWith('.local') || domain.endsWith('.test')) {

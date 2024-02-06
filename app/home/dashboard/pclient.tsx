@@ -3,11 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SRNavbar } from "@/components/main";
-import { getSession } from "@auth0/nextjs-auth0";
-import { redirect } from "next/navigation";
-import ormServer from "@/lib/prisma";
-import updateName from "@/lib/actions/db/profile/name";
-import createLink from "@/lib/actions/db/links/create";
 import FormWithToast from "@/components/toastform";
 import NameForm from "@/components/nameform";
 import { 
@@ -18,6 +13,7 @@ import {
     DialogTitle,
     DialogDescription,
 } from "@/components/ui/dialog";
+import formatForFavicon from "@/lib/utils/favicons";
 
 export default async function Dashboard({u, l}: any) {
     const createFromMysql = (mysqlString: string) => {
@@ -34,17 +30,12 @@ export default async function Dashboard({u, l}: any) {
         return `${result?.toDateString()} at ${result?.toLocaleTimeString()}` 
     }
 
-    const formatForFavicon = (url: string) => {
-        const urlObj = new URL(url);
-        return `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=128`;
-    }
-
     const faviconDiv = (link: any) => {
         return (
             <div key={link.id} className="flex flex-row justify-between items-center w-full my-2">
                 <div className="flex flex-row items-center w-[30%]">
                     <Image
-                        src={formatForFavicon(link.destination)}
+                        src={formatForFavicon(link.destination, 256)}
                         width={64}
                         height={64}
                         className="rounded-full mx-2"
