@@ -99,7 +99,7 @@ export function SRNavbar({u}: any) {
             <div className="flex items-center justify-between p-3 transition-all duration-200">
                         { u ? (
                                 <div id="menu" className="flex flex-row items-center justify-center space-x-4">
-                                    <p className={`text-sm text-gray-300 italic ${process.env.NEXT_PUBLIC_ENV === 'development' ? 'hidden xl:inline' : 'hidden md:inline'}`}>
+                                    {/* <p className={`text-sm text-gray-300 italic ${process.env.NEXT_PUBLIC_ENV === 'development' ? 'hidden xl:inline' : 'hidden md:inline'}`}>
                                         {u.name} {process.env.NEXT_PUBLIC_ENV === "development" ? `// Your UID: ${u.sub}`: ''}
                                     </p> */}
                                     <Link href="/dashboard/profile">
