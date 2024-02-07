@@ -44,7 +44,10 @@ export default function Settings({ u, l }: any) {
                     if (res.status === 200) {
                         await updatePFP(`https://users.cdn.mlinxapp.com/photos/${u.sub}/pfp${pfp?.type.replace('image/', '.')}`).then((res) => {
                             if (res.success) {
-                                toast.success("Profile picture updated");
+                                toast.success("Profile picture updated! Refreshing...");
+                                setTimeout(() => {
+                                    document.location.reload();
+                                }, 1000);
                             } else {
                                 toast.error("Photo uploaded but database update failed");
                             }
