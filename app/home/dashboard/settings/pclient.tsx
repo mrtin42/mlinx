@@ -10,12 +10,17 @@ import { useCallback, useState } from 'react';
 import updatePFP from '@/lib/actions/db/profile/pfp';
 import { toast } from 'sonner';
 import defaultPfp from '@/public/default.png';
+import { returnNewImage } from '@/lib/utils/images';
 
 export default function Settings({ u, l }: any) {
     const [loading, setLoading] = useState(false);
     const [pfp, setPFP] = useState<File>();
     async function handlePFPUpload(e: any) {
         e.preventDefault();
+        if (pfp?.type !== 'image/png' && pfp?.type !== 'image/gif') {
+            toast.warning("Due to technical limitations, JPEG images are currently unsupported. Feel free to use a platform like cloudconvert.com to convert your image to PNG.");
+            return;
+        }
         setLoading(true);
         await axios.get(
             '/api/profile/pfp/generateuploadurl',
@@ -37,7 +42,7 @@ export default function Settings({ u, l }: any) {
                     }
                 ).then(async (res) => {
                     if (res.status === 200) {
-                        await updatePFP(`https://users.cdn.mlinxapp.com/photos/${u.sub}/pfp.png`).then((res) => {
+                        await updatePFP(`https://users.cdn.mlinxapp.com/photos/${u.sub}/pfp${pfp?.type.replace('image/', '.')}`).then((res) => {
                             if (res.success) {
                                 toast.success("Profile picture updated");
                             } else {
@@ -63,9 +68,11 @@ export default function Settings({ u, l }: any) {
             } else if (!fileToUploed.type.startsWith("image/")) {
                 toast.error("File is not an image. Please upload an image.");
                 return;
-            } else if (fileToUploed.type !== "image/png" && fileToUploed.type !== "image/jpeg" && fileToUploed.type !== "image/jpg" && fileToUploed.type !== "image/gif") {
+            } else if (fileToUploed.type !== "image/png" && fileToUploed.type !== "image/gif") {
                 toast.error("File is not a supported image type. Please upload a PNG, JPEG, or GIF.");
                 return;
+            } else if (fileToUploed.type === "image/jpg" || fileToUploed.type === "image/jpeg") {
+                toast.warning("Due to technical limitations, JPEG images are currently unsupported. Feel free to use a platform like cloudconvert.com to convert your image to PNG.");
             }
             const reader = new FileReader();
             reader.onload = () => {
@@ -100,11 +107,9 @@ export default function Settings({ u, l }: any) {
                                 </form>
                             </div>
                             <div className="flex flex-col items-center justify-center w-full">
-                                <Image
+                                <img
                                     src={u.pfp}
-                                    width={256}
-                                    height={256}
-                                    className="rounded-lg p-1 border border-white"
+                                    className="rounded-lg p-1 border border-white w-[256px] h-[256px]"
                                     alt={`Profile Picture for ${u.name}`}
                                 />
                             </div>
