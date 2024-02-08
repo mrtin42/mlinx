@@ -1,4 +1,4 @@
-
+'use client';
 
 import Link from "next/link";
 import Image from "next/image";
@@ -16,7 +16,7 @@ import {
 import DashNav from "@/components/dashnav";
 import formatForFavicon from "@/lib/utils/favicons";
 
-export default async function Dashboard({u, l}: any) {
+export default function Dashboard({u, l}: any) {
     const createFromMysql = (mysqlString: string) => {
         var t, result = null;
 

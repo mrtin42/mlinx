@@ -20,6 +20,7 @@ model Profile {
   email String?                                                                 // auth0 user email (unique)
   pfp   String? @default("https://users.cdn.mlinxapp.com/defaults/default.png") // auth0 user profile picture (default to mlinx logo)
   Link  Link[]                                                                  // links owned by the user
+  Domain Domain[]                                                               // domains owned by the user
 }
 
 // now the tables for shortlinks
@@ -37,4 +38,16 @@ model Link {
   @@index([ownerId]) // index the owner id for faster lookups
 }
 
-// thats it (for now !!!!!!)
+// CUSTOM DOMAINS CUSTOM DOMAINS
+model Domain {
+  id          Int      @id @default(autoincrement())                      // autoincrementing identifier
+  domain      String   @unique                                            // the user's custom domain (e.g. mvrt.in, hazb.in, mbfr.me)
+  owner       Profile? @relation(fields: [ownerId], references: [sub])    // the owner of the domain, a profile identified by their auth0 sub (e.g. auth0|1234567890)
+  ownerId     String?                                                     // relation field for owner
+  createdAt   DateTime @default(now())                                    // when the domain was added
+  updatedAt   DateTime @updatedAt                                         // when the domain was last updated
+
+  @@index([ownerId]) // index the owner id for faster lookups
+}
+
+// good to add a table every now and then ! feels like ACCOMPLISHMENT TO ME?!?!!?!?
