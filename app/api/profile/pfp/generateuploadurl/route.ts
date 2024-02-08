@@ -24,6 +24,7 @@ export async function GET(req: NextRequest) {
     )
     const usertoGenLink = req.headers.get("X-Set-For-User") as string;
     const PfpFileType = req.headers.get("X-File-Type") as string; // so we can correctly set the content type
+    const PfpFileName = req.headers.get("X-File-Name") as string; // so we can correctly set the content type
     if (user.sub !== usertoGenLink) return new NextResponse(
         JSON.stringify({
             success: false,
@@ -94,7 +95,7 @@ export async function GET(req: NextRequest) {
             R2,
             new PutObjectCommand({
                 Bucket: 'mlinx-users',
-                Key: `photos/${ownerId}/pfp${PfpFileType.replace('image/', '.')}`,
+                Key: `photos/${ownerId}/pfp/${PfpFileName}`, // include the file name in the key, hopefully rendering the nextjs cache useless 
             }),
             { expiresIn: 60 }
         )

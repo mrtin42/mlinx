@@ -15,12 +15,8 @@ import { returnNewImage } from '@/lib/utils/images';
 export default function Settings({ u, l }: any) {
     const [loading, setLoading] = useState(false);
     const [pfp, setPFP] = useState<File>();
-    async function handlePFPUpload(e: any) {
+    async function handlePFPUpload(e: any): Promise<void> {
         e.preventDefault();
-        if (pfp?.type !== 'image/png' && pfp?.type !== 'image/gif') {
-            toast.warning("Due to technical limitations, JPEG images are currently unsupported. Feel free to use a platform like cloudconvert.com to convert your image to PNG.");
-            return;
-        }
         setLoading(true);
         await axios.get(
             '/api/profile/pfp/generateuploadurl',
@@ -28,10 +24,12 @@ export default function Settings({ u, l }: any) {
                 headers: {
                     'X-Set-For-User': u.sub,
                     'X-File-Type': pfp?.type,
+                    'X-File-Name': pfp?.name
                 },
             }
         ).then(async (res) => {
             if (res.data.success) {
+                toast.info("Uploading photo...");
                 axios.put(
                     res.data.url,
                     pfp,
@@ -41,8 +39,9 @@ export default function Settings({ u, l }: any) {
                         },
                     }
                 ).then(async (res) => {
+                    toast.info("Uploaded! Updating data...");
                     if (res.status === 200) {
-                        await updatePFP(`https://users.cdn.mlinxapp.com/photos/${u.sub}/pfp${pfp?.type.replace('image/', '.')}`).then((res) => {
+                        await updatePFP(`https://users.cdn.mlinxapp.com/photos/${u.sub}/pfp/${pfp?.name}`).then((res) => {
                             if (res.success) {
                                 toast.success("Profile picture updated! Refreshing...");
                                 setTimeout(() => {
@@ -61,6 +60,8 @@ export default function Settings({ u, l }: any) {
         })
     }
 
+
+
     const handlePFPChange = (e: any) => {
         const fileToUploed = e.target.files[0];
         console.log(fileToUploed);
@@ -71,11 +72,9 @@ export default function Settings({ u, l }: any) {
             } else if (!fileToUploed.type.startsWith("image/")) {
                 toast.error("File is not an image. Please upload an image.");
                 return;
-            } else if (fileToUploed.type !== "image/png" && fileToUploed.type !== "image/gif") {
+            } else if (fileToUploed.type !== "image/png" && fileToUploed.type !== "image/gif" && fileToUploed.type !== "image/jpeg" && fileToUploed.type !== "image/jpg") {
                 toast.error("File is not a supported image type. Please upload a PNG, JPEG, or GIF.");
                 return;
-            } else if (fileToUploed.type === "image/jpg" || fileToUploed.type === "image/jpeg") {
-                toast.warning("Due to technical limitations, JPEG images are currently unsupported. Feel free to use a platform like cloudconvert.com to convert your image to PNG.");
             }
             const reader = new FileReader();
             reader.onload = () => {
@@ -88,11 +87,11 @@ export default function Settings({ u, l }: any) {
     return (
         <>
             {/* simply the form on its own while i test the pfp upload */}
-            <div className="flex flex-col items-center justify-center w-full">
-                <SRNavbar u={u} />
+            <>
+                <SRNavbar u={u} dashboard={{ isDashboard: true, active: 'settings'}}/>
                 <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
                     <div className="flex flex-col items-center justify-center w-full">
-                        <h1 className="text-5xl font-bold">Settings</h1>
+                        <div className='h-[20vh] flex flex-col justify-center items-center'><h1 className="text-5xl font-bold">Settings</h1></div>
                         <div className="flex flex-row items-center justify-center w-full">
                             <div className="flex flex-col items-center justify-center w-full">
                                 <h2 className="text-3xl font-bold">Profile Picture</h2>
@@ -119,7 +118,7 @@ export default function Settings({ u, l }: any) {
                         </div>
                     </div>
                 </main>
-            </div>
+            </>
         </>
     )
 }

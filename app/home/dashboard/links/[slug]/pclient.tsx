@@ -8,7 +8,7 @@ import formatForFavicon from '@/lib/utils/favicons';
 export default function LinkPage({ u, l, slug }: any) {
     return (
         <div className="flex flex-col items-center justify-center w-full">
-            <SRNavbar u={u} />
+            <SRNavbar u={u} dashboard={{ isDashboard: true, active: 'dashboard' }} />
             <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
                 <div className="flex flex-row items-center justify-center w-full">
                     <div className='flex flex-col items-center justify-center w-full text-left'>

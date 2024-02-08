@@ -66,8 +66,7 @@ export default async function Dashboard({u, l}: any) {
 
     return (
         <>
-            <SRNavbar u={u} />
-            <DashNav active="dashboard" />
+            <SRNavbar u={u} dashboard={{ isDashboard: true, active: 'dashboard'}} />
             <main className="flex flex-col items-center min-h-screen w-screen">
                 <header className="flex flex-col items-center justify-center h-[20vh]">
                     <h1 className="text-5xl font-bold text-center">

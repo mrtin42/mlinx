@@ -37,7 +37,7 @@ export default async function Home() {
 
   return (
     <>
-      <SRNavbar u={u ? u : null}/>
+      <SRNavbar u={u ? u : null} dashboard={{isDashboard:false}}/>
       <main className="flex min-h-screen flex-col items-center w-screen">
         <div className="flex mt-3 flex-row items-center justify-between">
           <header className="flex flex-col justify-center max-w-[40vw] mr-10">
