@@ -2,7 +2,7 @@
 const nextConfig = {
     images: {
         // disable cache for remote images
-        minimumCacheTTL: 1,
+        minimumCacheTTL: 2,
         remotePatterns: [
             {
                 protocol: 'https',
