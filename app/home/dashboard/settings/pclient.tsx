@@ -109,9 +109,11 @@ export default function Settings({ u, l }: any) {
                                 </form>
                             </div>
                             <div className="flex flex-col items-center justify-center w-full">
-                                <img
+                                <Image
                                     src={u.pfp}
-                                    className="rounded-lg p-1 border border-white w-[256px] h-[256px]"
+                                    className="rounded-lg p-1 border border-white"
+                                    width={256}
+                                    height={256}
                                     alt={`Profile Picture for ${u.name}`}
                                 />
                             </div>
