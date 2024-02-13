@@ -32,7 +32,10 @@ const createLink = async (formData: FormData) => {
     
     const exists = await ormServer.link.findUnique({
         where: {
-            slug: slug
+            unique_link: {
+                slug,
+                domain
+            }
         }
     });
     

@@ -35,13 +35,14 @@ export default function Dashboard({u, l, d}: any) {
         return (
             <div key={link.id} className="flex flex-row justify-between items-center w-full my-2">
                 <div className="flex flex-row items-center w-[30%]">
+                    
                     <Image
                         src={formatForFavicon(link.destination, 256)}
                         width={64}
                         height={64}
                         className="rounded-full mx-2"
                         alt={`Favicon for ${link.destination}`}
-                    /><h3 className="font-bold text-md">{process.env.NEXT_PUBLIC_SHORT_HOSTNAME}/{link.slug}</h3>
+                    /><Link href={`https://${link.domain}/${link.slug}`} target="_blank" className="font-bold text-md">{link.domain}/{link.slug}</Link>
                 </div>
                 <div className="w-[10%]">
                     <h4 className="font-semibold text-md">Slug:</h4>

@@ -28,7 +28,7 @@ model Profile {
 model Link {
   id          Int      @id @default(autoincrement())                      // autoincrementing identifier
   domain      String   @default("mlinx.co")                               // the domain of the shortlink (e.g. mlinx.co, bit.ly, pr.tn)  
-  slug        String   @unique                                            // the shortlink slug (e.g. /catrescodes)
+  slug        String                                                      // the shortlink slug (e.g. /catrescodes)
   destination String                                                      // the destination url (e.g. https://http.cat)
   owner       Profile? @relation(fields: [ownerId], references: [sub])    // the owner of the link, a profile identified by their auth0 sub (e.g. auth0|1234567890)
   ownerId     String?                                                     // relation field for owner
@@ -36,6 +36,7 @@ model Link {
   updatedAt   DateTime @updatedAt                                         // when the link was last updated
 
   @@index([ownerId]) // index the owner id for faster lookups
+  @@unique(fields: [domain, slug], name: "unique_link") // unique constraint for domain and slug (e.g. mlinx.co/catrescodes)
 }
 
 // CUSTOM DOMAINS CUSTOM DOMAINS
