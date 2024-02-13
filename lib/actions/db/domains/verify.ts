@@ -70,7 +70,7 @@ if (process.env.NEXT_PUBLIC_ENV === 'development') {
                 if (verified) {
                     results.push({domain: domain.domain, status: true});
                 } else {
-                    results.push({domain: domain.domain, status: false, error: 'unverified', verification});
+                    results.push({domain: domain.domain, status: false, error: 'unverified', verification: verification[0]});
                 }
             } catch (e) {
                 results.push({domain: domain.domain, status: false, error: 'apiError'});
