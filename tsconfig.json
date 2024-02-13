@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/home/dashboard/settings/pclient.tsx", "lib/utils/images.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/mlinxapp.com/dashboard/settings/pclient.tsx", "lib/utils/images.js"],
   "exclude": ["node_modules"]
 }

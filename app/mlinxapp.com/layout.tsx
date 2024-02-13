@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { UserProvider } from '@auth0/nextjs-auth0/client';
+// import { UserProvider } from '@auth0/nextjs-auth0/client';
+import { ClerkProvider as UserProvider } from "@clerk/nextjs";
 import "../globals.css";
 import { Toaster } from "sonner";
+import { config } from '@fortawesome/fontawesome-svg-core'
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
 
 const inter = Inter({ subsets: ["latin"] });
 

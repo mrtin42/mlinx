@@ -42,6 +42,7 @@ model Link {
 model Domain {
   id          Int      @id @default(autoincrement())                      // autoincrementing identifier
   domain      String   @unique                                            // the user's custom domain (e.g. mvrt.in, hazb.in, mbfr.me)
+  connType    String   @default("A")                                      // the connection type (a record, cname, or some other magical connection they manage to spin up)
   owner       Profile? @relation(fields: [ownerId], references: [sub])    // the owner of the domain, a profile identified by their auth0 sub (e.g. auth0|1234567890)
   ownerId     String?                                                     // relation field for owner
   createdAt   DateTime @default(now())                                    // when the domain was added

@@ -1,10 +1,10 @@
 import { getSession } from "@auth0/nextjs-auth0";
-import Dashboard from "./pclient";
+import Domains from "./pclient";
 import ormServer from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { print } from "@/lib/utils";
 
-
-export default async function Home() {
+export default async function DomainsPage() {
     const { user } = await getSession() ?? { user: null };
 
     if (user) {
@@ -27,17 +27,25 @@ export default async function Home() {
             },
           });
         }
-        var links = await ormServer.link.findMany({
+        var domains = await ormServer.domain.findMany({
             where: {
                 ownerId: user.sub,
+            },
+            select: {
+                domain: true,
+                connType: true,
+                ownerId: true
             }
         });
     } else {
         return redirect("/api/auth/login");
     }
-    
-    const u = userinfo;
-    const l = links;
 
-    return <Dashboard u={u} l={l} />;
+    print(userinfo);
+    print(domains);
+
+    const u = userinfo;
+    const d = domains;
+
+    return <Domains u={u} d={d} />;
 }

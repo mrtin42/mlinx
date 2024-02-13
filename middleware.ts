@@ -43,7 +43,7 @@ export default async function middleware(
     }
     if (main.includes(domain)) {
         return NextResponse.rewrite(
-            new URL(`/home/${fullKey}`, req.url)
+            new URL(`/mlinxapp.com/${fullKey}`, req.url)
         );
     }
 }
