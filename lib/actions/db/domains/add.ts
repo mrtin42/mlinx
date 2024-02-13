@@ -1,6 +1,7 @@
 'use server';
 
 import ormServer from "@/lib/prisma";
+import axios from "axios";
 import { getSession } from "@auth0/nextjs-auth0";
 import { redirect } from "next/navigation";
 
@@ -36,6 +37,25 @@ const createDomain = async (formData: FormData) => {
             ownerId: ownerId
         }
     });
+
+    const x = await axios.post(
+        `https://api.vercel.com/v10/projects/${process.env.VERCEL_PROJECT_ID}/domains`,
+        { name: domain },
+        { headers: { Authorization: `Bearer ${process.env.VERCEL_TOKEN}` } }   
+    )
+
+    if (x.status !== 200) {
+        await ormServer.domain.delete({
+            where: {
+                domain: domain
+            }
+        });
+        return {
+            success: false,
+            message: "An error occurred while adding your domain to Vercel. Please try again later.",
+            details: x.data
+        }
+    }
 
     return {
         success: true,

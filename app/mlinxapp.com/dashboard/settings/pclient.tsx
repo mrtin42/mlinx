@@ -10,7 +10,6 @@ import { useCallback, useState } from 'react';
 import updatePFP from '@/lib/actions/db/profile/pfp';
 import { toast } from 'sonner';
 import defaultPfp from '@/public/default.png';
-import { returnNewImage } from '@/lib/utils/images';
 
 export default function Settings({ u, l }: any) {
     const [loading, setLoading] = useState(false);

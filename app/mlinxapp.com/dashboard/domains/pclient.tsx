@@ -46,6 +46,7 @@ export default function Domains({u, d}: any) {
             toast.success(res.message);
         }
         else {
+            print(res);
             toast.error(res.message);
         }
     }
