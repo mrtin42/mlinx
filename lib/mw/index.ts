@@ -24,9 +24,7 @@ export const LinkMw = async (req: NextRequest, ev: NextFetchEvent): Promise<any>
     }
 
     // the defaults above will never change and will only work for mlinx.co, not custom domains
-
     // get link from /link/:slug, parse response as JSON
-    // const slug = await fetch(`https://${process.env.NEXT_PUBLIC_MAIN_HOSTNAME}/link/${domain}/${key}`).then(res => res.json()).catch(err => console.error(err));
 
     const slug = await db.execute(`SELECT * FROM Link WHERE slug = '${key}' AND domain = '${domain}'`).then(res => res.rows[0]).catch(err => console.error(err));
 

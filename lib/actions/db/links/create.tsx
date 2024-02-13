@@ -27,6 +27,7 @@ const createLink = async (formData: FormData) => {
         }
     }
     const slug = formData.get("slug") as string;
+    const domain = formData.get("domain") as string ?? "mlinx.co";
     let destination = formData.get("destination") as string;
     
     const exists = await ormServer.link.findUnique({
@@ -66,6 +67,7 @@ const createLink = async (formData: FormData) => {
             ownerId,
             slug,
             destination,
+            domain
         },
     });
     

@@ -1,6 +1,7 @@
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 import { parse } from "./lib/mw/utils";
 import { LinkMw } from "./lib/mw";
+import { connect } from "@planetscale/database";
 if (process.env.NEXT_PUBLIC_SHORT_HOSTNAME) {
     var shorthostnames = process.env.NEXT_PUBLIC_SHORT_HOSTNAME ?? 'mlinx.co'
 } else {
@@ -8,13 +9,14 @@ if (process.env.NEXT_PUBLIC_SHORT_HOSTNAME) {
 }
 
 if (process.env.NEXT_PUBLIC_MAIN_HOSTNAME) {
-    var mainhostnames = process.env.NEXT_PUBLIC_MAIN_HOSTNAME ?? 'mlinxshortener.com'
+    var mainhostnames = process.env.NEXT_PUBLIC_MAIN_HOSTNAME ?? 'mlinxapp.com'
 } else {
     throw new Error('MAIN_HOSTNAMES environment variable not set');
 }
 
 const short = shorthostnames;
 const main = mainhostnames;
+const conn = connect({ url: process.env.DATABASE_URL });
 
 export const config = {
     matcher: [
@@ -37,6 +39,13 @@ export default async function middleware(
     ev: NextFetchEvent
 ) {
     const { domain, path, fullPath, key, fullKey } = parse(req);
+
+    if (domain !== main && domain !== short) {
+        const inDB = await conn.execute(`SELECT * FROM Domain WHERE domain = '${domain}'`).then(res => res.rows[0]).catch(err => console.error(err)) as Record<string, any>;
+        if (inDB.domain === domain) {
+            return LinkMw(req, ev);
+        }
+    }
 
     if (short.includes(domain)) {
         return LinkMw(req, ev);

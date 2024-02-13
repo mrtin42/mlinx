@@ -16,7 +16,7 @@ import {
 import DashNav from "@/components/dashnav";
 import formatForFavicon from "@/lib/utils/favicons";
 
-export default function Dashboard({u, l}: any) {
+export default function Dashboard({u, l, d}: any) {
     const createFromMysql = (mysqlString: string) => {
         var t, result = null;
 
@@ -127,7 +127,7 @@ export default function Dashboard({u, l}: any) {
                                                 Use the form below to create a new link.
                                             </DialogDescription>
                                         </DialogHeader>
-                                        <FormWithToast/>
+                                        <FormWithToast d={d} />
                                     </DialogContent>
                                 </Dialog>
                             </div>

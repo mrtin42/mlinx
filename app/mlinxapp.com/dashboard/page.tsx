@@ -32,12 +32,21 @@ export default async function Home() {
                 ownerId: user.sub,
             }
         });
+        var domains = await ormServer.domain.findMany({
+            where: {
+                ownerId: user.sub,
+            },
+            select: {
+                domain: true,
+            }
+        });
     } else {
         return redirect("/api/auth/login");
     }
     
     const u = userinfo;
     const l = links;
+    const d = domains;
 
-    return <Dashboard u={u} l={l} />;
+    return <Dashboard u={u} l={l} d={d} />;
 }

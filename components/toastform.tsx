@@ -5,8 +5,15 @@ import createLink from "@/lib/actions/db/links/create";
 import { toast } from "sonner";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { DialogClose } from "./ui/dialog";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "./ui/select";
 
-const FormWithToast = () => {
+const FormWithToast = ({ d }: any) => {
     const inputClasses = "w-full p-2 my-2 bg-black border-b border-gray-500 rounded-lg text-white";
 
     const { user } = useUser();
@@ -25,6 +32,14 @@ const FormWithToast = () => {
 
     return (
         <form action={handleSubmit}>
+            <select name="domain" className="w-full p-2 my-2 bg-black border-b border-gray-500 rounded-lg text-white">
+                <option key='main' value="mlinx.co">mlinx.co</option>
+                {d?.map((domain: any) => (
+                    <option key={domain.id} value={domain.name}>
+                        {domain.domain}
+                    </option>
+                ))}
+            </select>
             <input
                 type="text"
                 name="slug"
