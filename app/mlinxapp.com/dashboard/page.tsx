@@ -1,5 +1,4 @@
 import { getSession } from "@auth0/nextjs-auth0";
-import { auth, currentUser } from "@clerk/nextjs";
 import Dashboard from "./pclient";
 import ormServer from "@/lib/prisma";
 import { redirect } from "next/navigation";
