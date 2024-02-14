@@ -3,8 +3,8 @@
 import axios from "axios";
 import { Resolver } from "dns/promises";
 import { print } from "@/lib/utils";
-const resolver = new Resolver();
-resolver.setServers(["1.1.1.1", "1.0.0.1"]);
+const dig = new Resolver();
+dig.setServers(["1.1.1.1", "1.0.0.1"]);
 
 interface Domain {
     domain: string,
@@ -20,7 +20,7 @@ if (process.env.NEXT_PUBLIC_ENV === 'development') {
             switch (domain.connType) {
                 case 'A': {
                     try {
-                        const res = await resolver.resolve4(domain.domain);
+                        const res = await dig.resolve4(domain.domain);
                         print(res);
                         if (/76\.76\.21\.(21|61|93|98)$/.test(res[0])) {
                             results.push({domain: domain.domain, status: true, addresses: res});
@@ -34,7 +34,7 @@ if (process.env.NEXT_PUBLIC_ENV === 'development') {
                 }
                 case 'CNAME': {
                     try {
-                        const res = await resolver.resolveCname(domain.domain);
+                        const res = await dig.resolveCname(domain.domain);
                         print(res);
                         if (/^cname\.(vercel-dns|martin-dns)\.com$/.test(res[0])) {
                             results.push({domain: domain.domain, status: true, address: res});
@@ -68,7 +68,13 @@ if (process.env.NEXT_PUBLIC_ENV === 'development') {
                 print(res);
                 const { verified, verification } = res.data;
                 if (verified) {
-                    results.push({domain: domain.domain, status: true});
+                    const res = await dig.resolve4(domain.domain);
+                    print(res);
+                    if (/76\.76\.21\.(21|61|93|98)$/.test(res[0])) {
+                        results.push({domain: domain.domain, status: true, addresses: res});
+                    } else {
+                        results.push({domain: domain.domain, status: false, error: 'resolvedInvalid'});
+                    }
                 } else {
                     results.push({domain: domain.domain, status: false, error: 'unverified', verification: verification[0]});
                 }
