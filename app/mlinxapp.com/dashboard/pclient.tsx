@@ -17,24 +17,9 @@ import DashNav from "@/components/dashnav";
 import formatForFavicon from "@/lib/utils/favicons";
 import ormServer from "@/lib/prisma";
 import { toast } from "sonner";
+import deleteLink from "@/lib/actions/db/links/delete";
 
 export default function Dashboard({u, l, d}: any) {
-    const deleteLink = async (slug: string, domain: string) => {
-        'use server';
-
-        const link = await ormServer.link.delete({
-            where: {
-                unique_link: {
-                    slug: slug,
-                    domain: domain,
-                }
-            }
-        });
-        return {
-            success: true,  
-            message: `${domain}/${slug} was deleted successfully.`
-        }
-    };
 
     const faviconDiv = (link: any) => {
         return (
