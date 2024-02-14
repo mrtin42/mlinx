@@ -2,7 +2,6 @@ import { NextRequest } from "next/server";
 
 export const parse = (req: NextRequest) => {
   let domain = req.headers.get("host") as string;
-  domain = domain.replace("www.", ""); // remove www. from domain
   if (domain.endsWith(".vercel.app")) {
     // for local development and preview URLs
     domain = process.env.NEXT_PUBLIC_MAIN_HOSTNAMES as string;
