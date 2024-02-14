@@ -3,10 +3,22 @@ import LinkPage from "./pclient";
 import ormServer from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import puppeteer from "puppeteer";
+import { print } from "@/lib/utils";
 
-export default async function Profile({ params }: { params: { slug: string }}) {
+interface Props {
+  searchParams: {
+    [key: string]: string; 
+  }
+}
+
+export default async function Profile({ searchParams }: Props) {
+    console.log('x');
+    console.log(searchParams);
     const { user } = await getSession() ?? { user: null };
-
+    const slug = searchParams.key;
+    const domain = searchParams.domain;
+    print(`slug: ${slug}, domain: ${domain}`);
+    
     if (user) {
         var userinfo = await ormServer.profile.findUnique({
           where: {
@@ -29,7 +41,10 @@ export default async function Profile({ params }: { params: { slug: string }}) {
         }
         var link = await ormServer.link.findUnique({
           where: {
-            slug: params.slug,
+            unique_link: {
+              slug: slug,
+              domain: domain
+            }
           },
         });
         if (link?.ownerId !== user.sub) {
@@ -43,5 +58,5 @@ export default async function Profile({ params }: { params: { slug: string }}) {
     const l = link;
 
 
-    return <LinkPage u={u} l={l} slug={params.slug} />;
+    return <LinkPage u={u} l={l} />;
 }

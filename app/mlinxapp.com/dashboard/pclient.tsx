@@ -57,7 +57,7 @@ export default function Dashboard({u, l, d}: any) {
                     <p className="italic text-md">{new Date(link.createdAt).toDateString()}</p>
                 </div>
                 <div className="text-right">
-                    <Link href={`/dashboard/links/${link.slug}`} className="rounded-lg bg-gray-700 active:bg-slate-600 px-3 py-1 m-4">
+                    <Link href={`/dashboard/link?key=${link.slug}&domain=${link.domain}`} className="rounded-lg bg-gray-700 active:bg-slate-600 px-3 py-1 m-4">
                         Edit
                     </Link>
                 </div>

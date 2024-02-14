@@ -4,15 +4,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { SRNavbar } from '@/components/main';
 import formatForFavicon from '@/lib/utils/favicons';
+import { useSearchParams } from 'next/navigation';
 
 export default function LinkPage({ u, l, slug }: any) {
+    
     return (
         <div className="flex flex-col items-center justify-center w-full">
             <SRNavbar u={u} dashboard={{ isDashboard: true, active: 'dashboard' }} />
             <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
                 <div className="flex flex-row items-center justify-center w-full">
                     <div className='flex flex-col items-center justify-center w-full text-left'>
-                        <Link href={`http://${process.env.NEXT_PUBLIC_SHORT_HOSTNAME}${process.env.NEXT_PUBLIC_ENV === 'development' ? ':42069' : ''}/${slug}`} target='_blank'>
+                        <Link href={`https://${l.domain}/${l.slug}`} target='_blank'>
                             <div className="flex flex-row items-center justify-center w-full">
                                 <Image
                                     src={formatForFavicon(l.destination, 64)}
