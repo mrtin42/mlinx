@@ -11,13 +11,13 @@ interface Props {
   }
 }
 
-export default async function Profile({ searchParams }: Props) {
-    console.log('x');
-    console.log(searchParams);
-    const { user } = await getSession() ?? { user: null };
-    const slug = searchParams.key;
-    const domain = searchParams.domain;
-    print(`slug: ${slug}, domain: ${domain}`);
+  export default async function Profile({ searchParams }: Props) {
+      console.log('x');
+      console.log(searchParams);
+      const { user } = await getSession() ?? { user: null };
+      const slug = searchParams.key;
+      const domain = searchParams.domain;
+      print(`slug: ${slug}, domain: ${domain}`);
     
     if (user) {
         var userinfo = await ormServer.profile.findUnique({

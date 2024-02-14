@@ -15,21 +15,26 @@ import {
 } from "@/components/ui/dialog";
 import DashNav from "@/components/dashnav";
 import formatForFavicon from "@/lib/utils/favicons";
+import ormServer from "@/lib/prisma";
+import { toast } from "sonner";
 
 export default function Dashboard({u, l, d}: any) {
-    const createFromMysql = (mysqlString: string) => {
-        var t, result = null;
+    const deleteLink = async (slug: string, domain: string) => {
+        'use server';
 
-        if( typeof mysqlString === 'string' )
-        {
-           t = mysqlString.split(/[- :]/);
-     
-           //when t[3], t[4] and t[5] are missing they defaults to zero
-           result = new Date(Number(t[0]), Number(t[1]) - 1, Number(t[2]), Number(t[3]) || 0, Number(t[4]) || 0, Number(t[5]) || 0);          
+        const link = await ormServer.link.delete({
+            where: {
+                unique_link: {
+                    slug: slug,
+                    domain: domain,
+                }
+            }
+        });
+        return {
+            success: true,  
+            message: `${domain}/${slug} was deleted successfully.`
         }
-     
-        return `${result?.toDateString()} at ${result?.toLocaleTimeString()}` 
-    }
+    };
 
     const faviconDiv = (link: any) => {
         return (
@@ -60,6 +65,16 @@ export default function Dashboard({u, l, d}: any) {
                     <Link href={`/dashboard/link?key=${link.slug}&domain=${link.domain}`} className="rounded-lg bg-gray-700 active:bg-slate-600 px-3 py-1 m-4">
                         Edit
                     </Link>
+                    <button onClick={async () => {
+                        const x = await deleteLink(link.slug, link.domain);
+                        if (x.success) {
+                            toast.success(x.message);
+                        } else {
+                            toast.error(x.message);
+                        }
+                    }} className="rounded-lg bg-red-700 hover:bg-red-500 active:bg-red-600 px-3 py-1 m-4">
+                        Delete
+                    </button>
                 </div>
             </div>
         );
