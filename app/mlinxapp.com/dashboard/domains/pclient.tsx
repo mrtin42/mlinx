@@ -22,6 +22,7 @@ import createDomain from "@/lib/actions/db/domains/add";
 import { toast } from "sonner";
 import { print } from "@/lib/utils";
 import printToServer from "@/lib/utils/printToServer";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Domains({u, d}: any) {
     const [DNSStatus, setDNSStatus] = useState<any>([]);
@@ -58,39 +59,29 @@ export default function Domains({u, d}: any) {
         <>
             <SRNavbar u={u} dashboard={{isDashboard: true, active: "domains"}} />
             <div className="flex flex-col items-center justify-center">
-                <div className="flex flex-col items-center justify-center">
-                    <h1 className="text-4xl font-bold text-center">Domains</h1>
-                    <p className="text-lg text-gray-300 italic">Manage your domains</p>
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                    <Dialog>
-                        <DialogTrigger className="rounded-lg bg-gray-700 active:bg-slate-600 px-3 py-1">
-                            Add Domain
-                        </DialogTrigger>
-                        <DialogContent className="bg-gray-800 p-4">
-                            <DialogHeader>
-                                <DialogTitle>Add Domain</DialogTitle>
-                                <DialogDescription>
-                                    Add a domain to your account
-                                </DialogDescription>
-                            </DialogHeader>
-                            <div className="flex flex-col items-center justify-center">
+                <div className="flex flex-row items-center justify-between w-[80vw] h-36">
+                    <div className="flex flex-col items-start">
+                        <h1 className="text-6xl font-bold text-left">Domains</h1>
+                        <p className="text-lg text-left italic text-gray-300">Manage your custom domains</p>
+                    </div>
+                    <div className="flex flex-col items-end justify-center">
+                        <Dialog>
+                            <DialogTrigger className="rounded-lg bg-gray-700 active:bg-slate-600 px-3 py-1 mx-2 my-1">
+                                Add Domain
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Add Domain</DialogTitle>
+                                    <DialogClose />
+                                </DialogHeader>
                                 <form action={handleCreateDomain} method="post">
-                                    <input type="text" name="domain" placeholder="Domain" className="rounded-lg bg-gray-700 active:bg-slate-600 px-3 py-1" />
+                                    <input type="text" name="domain" placeholder="Domain" className="w-full p-2 my-2 bg-black border-b border-gray-500 rounded-lg text-white" />
                                     <input type="hidden" name="ownerId" value={u.sub} />
-                                    <DialogClose>
-                                        <button type="submit" className="rounded-lg bg-gray-700 active:bg-slate-600 px-3 py-1">
-                                            Add Domain
-                                        </button>
-                                    </DialogClose>
+                                    <DialogClose><button type="submit" className="rounded-lg bg-gray-700 hover:bg-slate-600 px-3 py-1 m-2">Add Domain</button></DialogClose>
                                 </form>
-                            </div>
-                        </DialogContent>
-                    </Dialog>
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                    <h2 className="text-2xl font-bold text-center">Your Domains</h2>
-                    <button className="rounded-lg bg-gray-700 active:bg-slate-600 px-3 py-1" onClick={async () => {
+                            </DialogContent>
+                        </Dialog>
+                        <button className="rounded-lg bg-gray-700 active:bg-slate-600 px-3 py-1 mx-2 mb-1" onClick={async () => {
                         const x = await verifyDNS(d);
                         print(x);
                         printToServer(x);
@@ -98,6 +89,9 @@ export default function Domains({u, d}: any) {
                         print(`${DNSStatus} <- this is the DNSStatus`);
                         printToServer(`${DNSStatus} <- this is the DNSStatus`);
                     }}>Refresh</button>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center justify-center">
                     <div className="flex flex-col items-center justify-center">
                         {
                             !loading && DNSStatus[0] ? DNSStatus.map((domstat: any) => {
@@ -139,15 +133,15 @@ export default function Domains({u, d}: any) {
                                                             <p className="text-lg text-gray-300 italic">Your domain is not verified. Please verify your domain by adding a TXT record to your DNS settings:</p>
                                                             <div className="flex flex-row items-center text-left w-full bg-slate-700 rounded-lg p-2 m-2">
                                                                 <div className="flex flex-col items-center justify-center">
-                                                                    <p className="text-lg text-gray-300 bold">Hostname:</p>
+                                                                    <p className="text-lg text-gray-300 font-bold">Hostname:</p>
                                                                     <p className="text-lg text-gray-300 italic font-mono">{domstat.verification.domain}</p>
                                                                 </div>
                                                                 <div className="flex flex-col items-center justify-center">
-                                                                    <p className="text-lg text-gray-300 bold">Record type:</p>
+                                                                    <p className="text-lg text-gray-300 font-bold">Record type:</p>
                                                                     <p className="text-lg text-gray-300 italic font-mono">{domstat.verification.type}</p>
                                                                 </div>
                                                                 <div className="flex flex-col items-center justify-center">
-                                                                    <p className="text-lg text-gray-300 bold">Value:</p>
+                                                                    <p className="text-lg text-gray-300 font-bold">Value:</p>
                                                                     <p className="text-lg text-gray-300 italic font-mono">{domstat.verification.value}</p>
                                                                 </div>
                                                             </div>
@@ -157,17 +151,17 @@ export default function Domains({u, d}: any) {
                                                     {domstat.conn === 'A' ? (
                                                         <div className="flex flex-row items-center text-left w-full bg-slate-700 rounded-lg p-2 m-2">
                                                             <div className="flex flex-col text-left w-[10%]">
-                                                                <p className="text-lg text-gray-300 bold">Type</p>
+                                                                <p className="text-lg text-gray-300 font-bold">Type</p>
                                                                 <p className="text-lg text-gray-300 italic font-mono">A</p>
                                                                 <p className="text-lg text-gray-300 italic font-mono">A</p>
                                                             </div>
                                                             <div className="flex flex-col text-left w-[30%]">
-                                                                <p className="text-lg text-gray-300 bold">Hostname</p>
+                                                                <p className="text-lg text-gray-300 font-bold">Hostname</p>
                                                                 <p className="text-lg text-gray-300 italic font-mono">@</p>
                                                                 <p className="text-lg text-gray-300 italic font-mono">@</p>
                                                             </div>
                                                             <div className="flex flex-col text-left w-[30%]">
-                                                                <p className="text-lg text-gray-300 bold">Value</p>
+                                                                <p className="text-lg text-gray-300 font-bold">Value</p>
                                                                 <p className="text-lg text-gray-300 italic font-mono">76.76.21.21</p>
                                                                 <p className="text-lg text-gray-300 italic font-mono">76.76.21.61</p>
                                                             </div>
@@ -175,15 +169,15 @@ export default function Domains({u, d}: any) {
                                                     ) : (
                                                         <div className="flex flex-row items-center text-left w-full bg-slate-700 rounded-lg p-2 m-2">
                                                             <div className="flex flex-col items-center justify-center">
-                                                                <p className="text-lg text-gray-300 bold">Type</p>
+                                                                <p className="text-lg text-gray-300 font-bold">Type</p>
                                                                 <p className="text-lg text-gray-300 italic font-mono">CNAME</p>
                                                             </div>
                                                             <div className="flex flex-col items-center justify-center">
-                                                                <p className="text-lg text-gray-300 bold">Hostname</p>
+                                                                <p className="text-lg text-gray-300 font-bold">Hostname</p>
                                                                 <p className="text-lg text-gray-300 italic font-mono">{domstat.domain.split('.')[0]}</p>
                                                             </div>
                                                             <div className="flex flex-col items-center justify-center">
-                                                                <p className="text-lg text-gray-300 bold">Value</p>
+                                                                <p className="text-lg text-gray-300 font-bold">Value</p>
                                                                 <p className="text-lg text-gray-300 italic font-mono">cname.vercel-dns.com</p>
                                                             </div>
                                                         </div>
@@ -193,7 +187,22 @@ export default function Domains({u, d}: any) {
                                         </div>
                                     </div>
                                 )
-                            }) : <p className="text-lg text-gray-300 italic">{loading ? "Loading..." : "No domains found"}</p>
+                            }) : (
+                                <>
+                                    <div className="flex flex-col items-center justify-center">
+                                        {loading ? (
+                                            <>
+                                            <p className="text-lg text-gray-300 italic">Loading..</p>
+                                            <Skeleton className="w-[80vw] h-16" />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <p className="text-lg text-gray-300 italic">You have no domains added.</p>
+                                            </>
+                                        )}
+                                    </div>
+                                </>
+                            )
                         }
                     </div>
                 </div>

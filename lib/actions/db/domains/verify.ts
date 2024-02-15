@@ -88,7 +88,8 @@ if (process.env.NEXT_PUBLIC_ENV === 'development') {
                         }
                     }
                 } else {
-                    results.push({domain: domain.domain, status: false, error: 'unverified', verification: verification[0]});
+                    let conn = domain.domain.split('.')[2] ? 'CNAME' : 'A';
+                    results.push({domain: domain.domain, status: false, error: 'unverified', conn, verification: verification[0]});
                 }
             } catch (e) {
                 results.push({domain: domain.domain, status: false, error: 'apiError'});
