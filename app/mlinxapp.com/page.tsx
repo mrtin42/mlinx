@@ -79,7 +79,9 @@ export default async function Home() {
         <div className="flex flex-col justify-between w-[80vw]">
           <h1 className="text-4xl font-bold py-1 text-center">Early Days!</h1>
           <p className="text-2xl italic font-sans">
-            MLINX.co is still in its early days, so please be patient with us! We're working hard to make this the best link shortener on the web. If you have any suggestions, please let us know!
+            MLINX.co is still in its early days, so please be patient with us! We're working hard to make this the best link shortener on the web. If you have any suggestions, please let us know!<br />
+            -<br />
+            During these early days, the UI will look generally abysmal, and the functionality will be somewhat limited. Rest assured that on full release, MLINX.co will be a fully-featured, open-source link shortener with a beautiful UI and (mayhaps) a powerful API.
           </p>
         </div>
       </main>
