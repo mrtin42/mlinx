@@ -33,7 +33,6 @@ export default async function DomainsPage() {
             },
             select: {
                 domain: true,
-                connType: true,
                 ownerId: true
             }
         });
