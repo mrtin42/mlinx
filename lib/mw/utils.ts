@@ -4,7 +4,7 @@ export const parse = (req: NextRequest) => {
   let domain = req.headers.get("host") as string;
   if (domain.endsWith(".vercel.app")) {
     // for local development and preview URLs
-    domain = process.env.NEXT_PUBLIC_MAIN_HOSTNAMES as string;
+    domain = process.env.NEXT_PUBLIC_MAIN_HOSTNAME as string;
   }
 
   if (domain.includes(":")) {
