@@ -81,7 +81,7 @@ export function SRNavbar({u, dashboard}: any) {
     }, []);
 
     return (
-        <nav className={`sticky top-0 z-[99] transition-all duration-300 bg-black/50 backdrop-blur-sm border-b ${scrolled ? "border-zinc-100/10" : "border-transparent"}`}>
+        <nav className={`sticky top-0 z-[99] transition-all duration-300 bg-black/50 backdrop-blur-sm border-b ${dashboard.isDashboard && scrolled ? "border-zinc-100/10" : "border-transparent"}`}>
             <div className="flex flex-row justify-between px-20">
                 <div className="flex items-center justify-between p-2">
                 <Link href="/">

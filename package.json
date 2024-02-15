@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NEXT_PUBLIC_ENV=development next dev -p 42069",
+    "dev": "NEXT_PUBLIC_ENV=development next dev -p 42069 --experimental-https --experimental-https-key ./martinsmacbook.local+4-key.pem --experimental-https-cert ./martinsmacbook.local+4.pem",
     "dev:sch": "NEXT_PUBLIC_ENV=development next dev -p 3000",
     "build": "prisma generate && next build",
-    "start": "next start",
+    "start": "next start -p 80",
     "lint": "next lint"
   },
   "dependencies": {

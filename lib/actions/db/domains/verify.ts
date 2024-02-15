@@ -17,32 +17,33 @@ if (process.env.NEXT_PUBLIC_ENV === 'development') {
         print(domains);
         let results = [];
         for (const domain of domains) {
-            switch (domain.connType) {
-                case 'A': {
+            switch (!domain.domain.split('.')[2]) {
+                case true: {
                     try {
                         const res = await dig.resolve4(domain.domain);
                         print(res);
-                        if (/76\.76\.21\.(21|61|93|98)$/.test(res[0])) {
-                            results.push({domain: domain.domain, status: true, addresses: res});
+                        // regex pattern to test if the resolved IP address is a Vercel IP address (begins with 76.76.21 and ends with anything between 1 and 255)
+                        if (/^76\.76\.21\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(res[0])) {
+                            results.push({domain: domain.domain, status: true, conn: 'A', addresses: res});
                         } else {
-                            results.push({domain: domain.domain, status: false, error: 'resolvedInvalid'});
+                            results.push({domain: domain.domain, status: false, conn: 'A', error: 'resolvedInvalid'});
                         }
                     } catch (e) {
-                        results.push({domain: domain.domain, status: false, error: 'resolverError'});
+                        results.push({domain: domain.domain, status: false, conn: 'A', error: 'resolverError'});
                     }
                     break;
                 }
-                case 'CNAME': {
+                case false: {
                     try {
                         const res = await dig.resolveCname(domain.domain);
                         print(res);
                         if (/^cname\.(vercel-dns|martin-dns)\.com$/.test(res[0])) {
-                            results.push({domain: domain.domain, status: true, address: res});
+                            results.push({domain: domain.domain, status: true, conn: 'CNAME', address: res});
                         } else {
-                            results.push({domain: domain.domain, status: false, error: 'resolvedInvalid'});
+                            results.push({domain: domain.domain, status: false, conn: 'CNAME', error: 'resolvedInvalid'});
                         }
                     } catch (e) {
-                        results.push({domain: domain.domain, status: false, error: 'resolverError'});
+                        results.push({domain: domain.domain, status: false, conn: 'CNAME', error: 'resolverError'});
                     }
                     break;
                 } 
@@ -68,12 +69,22 @@ if (process.env.NEXT_PUBLIC_ENV === 'development') {
                 print(res);
                 const { verified, verification } = res.data;
                 if (verified) {
-                    const res = await dig.resolve4(domain.domain);
-                    print(res);
-                    if (/76\.76\.21\.(21|61|93|98)$/.test(res[0])) {
-                        results.push({domain: domain.domain, status: true, addresses: res});
-                    } else {
-                        results.push({domain: domain.domain, status: false, error: 'resolvedInvalid'});
+                    if (!domain.domain.split('.')[2]) {
+                        const res = await dig.resolve4(domain.domain);
+                        print(res);
+                        if (/^76\.76\.21\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(res[0])) {
+                            results.push({domain: domain.domain, status: true, conn: 'A', addresses: res});
+                        } else {
+                            results.push({domain: domain.domain, status: false, conn: 'A', error: 'resolvedInvalid'});
+                        }
+                    } else { 
+                        const res = await dig.resolveCname(domain.domain);
+                        print(res);
+                        if (/^cname\.vercel-dns\.com$/.test(res[0])) {
+                            results.push({domain: domain.domain, status: true, conn: 'CNAME', address: res});
+                        } else {
+                            results.push({domain: domain.domain, status: false, error: 'resolvedInvalid'});
+                        }
                     }
                 } else {
                     results.push({domain: domain.domain, status: false, error: 'unverified', verification: verification[0]});

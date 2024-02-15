@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function DashNav({ active }: { active: string }) {
     return (
-        <div className="border-b border-wid border-zinc-100-/10 bg-black/50 backdrop-blur-sm flex flex-row items-center justify-between">
+        <div className="border-b border-wid border-zinc-100-/10 flex flex-row items-center justify-between">
             <div className="flex flex-row items-center justify-between p-3">
                 <div className={`${active === "dashboard" ? "text-cyan-950" : "text-gray-300"} text-sm italic m-2 mr-4`}>
                     <Link href="/dashboard">

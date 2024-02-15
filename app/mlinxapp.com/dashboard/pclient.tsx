@@ -17,7 +17,7 @@ import DashNav from "@/components/dashnav";
 import formatForFavicon from "@/lib/utils/favicons";
 import ormServer from "@/lib/prisma";
 import { toast } from "sonner";
-import deleteLink from "@/lib/actions/db/links/delete";
+import deleteLink    from "@/lib/actions/db/links/delete";
 
 export default function Dashboard({u, l, d}: any) {
 

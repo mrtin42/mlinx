@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
-        <body className="bg-black text-slate-50" vaul-drawer-wrapper="">
+        <body className="bg-black text-slate-50 font-sans" vaul-drawer-wrapper="">
           <Toaster />
           {children}
         </body>
