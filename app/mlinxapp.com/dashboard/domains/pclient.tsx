@@ -17,7 +17,7 @@ import {
 import { useEffect, useState } from "react";
 import verifyDNS from "@/lib/actions/db/domains/verify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTimes, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import createDomain from "@/lib/actions/db/domains/add";
 import { toast } from "sonner";
 import { print } from "@/lib/utils";
@@ -26,8 +26,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Domains({u, d}: any) {
     const [DNSStatus, setDNSStatus] = useState<any>([]);
-    const [open, setOpen] = useState<String | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [open, setOpen] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [refreshing, setRefreshing] = useState<boolean>(false);
     useEffect(() => {
         const z = async () => {
             const x = await verifyDNS(d);
@@ -82,13 +83,17 @@ export default function Domains({u, d}: any) {
                             </DialogContent>
                         </Dialog>
                         <button className="rounded-lg bg-gray-700 active:bg-slate-600 px-3 py-1 mx-2 mb-1" onClick={async () => {
+                        setRefreshing(true);
                         const x = await verifyDNS(d);
                         print(x);
                         printToServer(x);
                         setDNSStatus(x);
+                        setRefreshing(false);
                         print(`${DNSStatus} <- this is the DNSStatus`);
                         printToServer(`${DNSStatus} <- this is the DNSStatus`);
-                    }}>Refresh</button>
+                    }}>
+                        {refreshing ? <><FontAwesomeIcon icon={faCircleNotch} spin />&nbsp;</> : ""}Refresh
+                    </button>
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-center">
@@ -193,7 +198,7 @@ export default function Domains({u, d}: any) {
                                         {loading ? (
                                             <>
                                             <p className="text-lg text-gray-300 italic">Loading..</p>
-                                            <Skeleton className="w-[80vw] h-16" />
+                                            <Skeleton className="w-[80vw] h-[8vh] rounded-xl" />
                                             </>
                                         ) : (
                                             <>
