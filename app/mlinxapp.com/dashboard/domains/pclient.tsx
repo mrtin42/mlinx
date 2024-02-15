@@ -47,6 +47,7 @@ export default function Domains({u, d}: any) {
         printToServer(`response: ${res} <- this is the response from the server`)
         if (res.success) {
             toast.success(res.message);
+            const x = await verifyDNS(d);
         }
         else {
             print(res);
