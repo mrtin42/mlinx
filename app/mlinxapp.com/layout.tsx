@@ -12,6 +12,26 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "MLINX.co",
   description: "Reinventing the way we share links",
+  themeColor: "#111111",
+  icons: [
+    {
+      rel: "icon",
+      href: "/dark.favicon.ico",
+      url: "/dark.favicon.ico",
+      media: "(prefers-color-scheme: dark)",
+    },
+    {
+      rel: "icon",
+      href: "/light.favicon.ico",
+      url: "/light.favicon.ico",
+      media: "(prefers-color-scheme: light)",
+    },
+    {
+      rel: "apple-touch-icon",
+      href: "/apple-touch-icon.png",
+      url: "/apple-touch-icon.png",
+    },
+  ],
   
 };
 
