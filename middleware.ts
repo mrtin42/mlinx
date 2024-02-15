@@ -41,6 +41,13 @@ export default async function middleware(
     const { domain, path, fullPath, key, fullKey } = parse(req);
 
     if (domain !== main && domain !== short) {
+        if (fullKey === '_nslookup/trace') {
+            return NextResponse.json({
+                domain: domain,
+                status: true,
+                msg: 'correct! this domain points to mlinx\'s servers via Cloudflare\'s proxy.',
+            }, { status: 200 });
+        }
         const inDB = await conn.execute(`SELECT * FROM Domain WHERE domain = '${domain}'`).then(res => res.rows[0]).catch(err => console.error(err)) as Record<string, any>;
         if (inDB.domain === domain) {
             return LinkMw(req, ev);
