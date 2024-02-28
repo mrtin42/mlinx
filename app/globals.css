@@ -78,3 +78,7 @@
 .transition-height {
   transition: height 0.3s linear;
 }
+
+.ntw-dnh {
+  height: calc(100vh - 4rem);
+}
