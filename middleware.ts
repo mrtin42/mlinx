@@ -50,16 +50,22 @@ export default async function middleware(
         }
         const inDB = await conn.execute(`SELECT * FROM Domain WHERE domain = '${domain}'`).then(res => res.rows[0]).catch(err => console.error(err)) as Record<string, any>;
         if (inDB.domain === domain) {
-            return LinkMw(req, ev);
+            // return LinkMw(req, ev);
+            return NextResponse.redirect(
+                'https://mlinxapp.com/systems-suspended', { status: 302 }
+            ); // this is a temporary measure until we figure out the database stuff
         }
     }
 
     if (short.includes(domain)) {
-        return LinkMw(req, ev);
+        // return LinkMw(req, ev);
+        return NextResponse.redirect(
+            'https://mlinxapp.com/systems-suspended', { status: 302 }
+        ); // this is a temporary measure until we figure out the database stuff
     }
     if (main.includes(domain)) {
         return NextResponse.rewrite(
             new URL(`/mlinxapp.com/${fullKey}`, req.url)
-        );
+        ); // cloudflare will handle redirecting to the /systems-suspended page when the domain is mlinxapp.com
     }
 }
