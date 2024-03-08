@@ -2,6 +2,31 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'MLINX.co services are currently suspended',
+    description: 'Capitalism has forced us to suspend our services. We are working on a solution, and we hope to be back soon. Thank you for your understanding.',
+    openGraph: {
+        title: 'MLINX.co services are currently suspended',
+        description: 'Capitalism has forced us to suspend our services. We are working on a solution, and we hope to be back soon. Thank you for your understanding.',
+        type: 'website',
+        url: 'https://mlinxapp.com/systems-suspended',
+        images: [
+            {
+                url: 'https://www.mlinxapp.com/suspended.png',
+                width: 800,
+                height: 600,
+                alt: 'MLINX.co logo',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        site: '@t_ub3',
+    },
+
+}
 
 export default function SystemsSuspended() {
     return (
