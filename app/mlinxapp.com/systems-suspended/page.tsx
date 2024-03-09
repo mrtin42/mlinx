@@ -45,7 +45,7 @@ export default function SystemsSuspended() {
                         <br /><br />
                         Thankfully, MLINX.co is not a business-critical service, so we hope that this will not cause too much inconvenience. If you still require URL shortening services, we recommend using <a className='underline hover:no-underline' href="https://dub.co">Dub</a> in the meantime. Its what inspired us to make this in the first place, and it's a great service. We will also be providing a way to export your data from our systems in the near future, so you can easily migrate to another service.
                         <br /><br />
-                        We are sorry for the inconvenience, and we hope to be back soon. Thank you for your understanding, and f*ck you, PlanetScale.
+                        We are sorry for the inconvenience, and we hope to be back soon. Thank you for your understanding, and fuck you, PlanetScale.
                     </p>
                 </div>
             </div>
