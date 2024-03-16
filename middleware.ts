@@ -58,13 +58,13 @@ export default async function middleware(
         return LinkMw(req, ev);
     }
     if (main.includes(domain)) {
-        if (req.headers.get('MDEV-Cloudflare') !== 'true') {
+        if (req.headers.get('MDEV-Cloudflare') !== 'i-love-angel-dust') {
             return NextResponse.json({
                 error: 'Unproxied request',
                 status: false,
                 msg: 'www.mlinxapp.com is only accessible via Cloudflare\'s proxy. Direct requests are not allowed.',
             },
-            { status: 407 /* Proxy Authentication Required */ }
+            { status: 403 /* Forbidden */ }
             )
         }
 
