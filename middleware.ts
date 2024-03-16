@@ -50,22 +50,27 @@ export default async function middleware(
         }
         const inDB = await conn.execute(`SELECT * FROM Domain WHERE domain = '${domain}'`).then(res => res.rows[0]).catch(err => console.error(err)) as Record<string, any>;
         if (inDB.domain === domain) {
-            // return LinkMw(req, ev);
-            return NextResponse.redirect(
-                'https://mlinxapp.com/systems-suspended', { status: 302 }
-            ); // this is a temporary measure until we figure out the database stuff
+            return LinkMw(req, ev);
         }
     }
 
     if (short.includes(domain)) {
-        // return LinkMw(req, ev);
-        return NextResponse.redirect(
-            'https://mlinxapp.com/systems-suspended', { status: 302 }
-        ); // this is a temporary measure until we figure out the database stuff
+        return LinkMw(req, ev);
     }
     if (main.includes(domain)) {
+        if (req.headers.get('MDEV-Cloudflare') !== 'true') {
+            return NextResponse.json({
+                error: 'Unproxied request',
+                status: false,
+                msg: 'www.mlinxapp.com is only accessible via Cloudflare\'s proxy. Direct requests are not allowed.',
+                advice: 'If you are visiting www.mlinxapp.com and are still seeing this error, please contact the MLINX creator at me@martin.blue
+            },
+            { status: 407 /* Proxy Authentication Required */ }
+            )
+        }
+
         return NextResponse.rewrite(
             new URL(`/mlinxapp.com/${fullKey}`, req.url)
-        ); // cloudflare will handle redirecting to the /systems-suspended page when the domain is mlinxapp.com
+        ); // cloudflare will handle redirecting to the /systems-suspended page when the domain is mlinxapp.com and systems are suspended
     }
 }
