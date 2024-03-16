@@ -63,7 +63,6 @@ export default async function middleware(
                 error: 'Unproxied request',
                 status: false,
                 msg: 'www.mlinxapp.com is only accessible via Cloudflare\'s proxy. Direct requests are not allowed.',
-                advice: 'If you are visiting www.mlinxapp.com and are still seeing this error, please contact the MLINX creator at me@martin.blue
             },
             { status: 407 /* Proxy Authentication Required */ }
             )
