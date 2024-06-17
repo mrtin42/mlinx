@@ -1,7 +1,10 @@
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 import { parse } from "./lib/mw/utils";
 import { LinkMw } from "./lib/mw";
-import { connect } from "@planetscale/database";
+import { neon } from '@neondatabase/serverless'
+
+const sql = neon(process.env.DATABASE_URL as string);
+
 if (process.env.NEXT_PUBLIC_SHORT_HOSTNAME) {
     var shorthostnames = process.env.NEXT_PUBLIC_SHORT_HOSTNAME ?? 'mlinx.co'
 } else {
@@ -16,7 +19,6 @@ if (process.env.NEXT_PUBLIC_MAIN_HOSTNAME) {
 
 const short = shorthostnames;
 const main = mainhostnames;
-const conn = connect({ url: process.env.DATABASE_URL });
 
 export const config = {
     matcher: [
@@ -48,7 +50,7 @@ export default async function middleware(
                 msg: 'correct! this domain points to mlinx\'s servers via Cloudflare\'s proxy.',
             }, { status: 200 });
         }
-        const inDB = await conn.execute(`SELECT * FROM Domain WHERE domain = '${domain}'`).then(res => res.rows[0]).catch(err => console.error(err)) as Record<string, any>;
+        const inDB = await sql`SELECT * FROM "Domain" WHERE "domain" = ${domain}` as any;
         if (inDB.domain === domain) {
             return LinkMw(req, ev);
         }
@@ -58,7 +60,7 @@ export default async function middleware(
         return LinkMw(req, ev);
     }
     if (main.includes(domain)) {
-        if (req.headers.get('MDEV-Cloudflare') !== 'i-love-angel-dust') {
+        if (req.headers.get('MDEV-Cloudflare') !== process.env.CLOUDFLARE_KEY && process.env.NEXT_PUBLIC_ENV !== 'development') {
             return NextResponse.json({
                 error: 'Unproxied request',
                 status: false,
