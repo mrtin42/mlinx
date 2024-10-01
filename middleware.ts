@@ -35,6 +35,6 @@ export default async function middleware(
     ev: NextFetchEvent
 ) {
         return NextResponse.rewrite(
-            new URL(`/home/${fullKey}`, req.url)
+            new URL(`/home/${req.nextUrl.pathname}`, req.url)
         );
 }
