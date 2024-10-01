@@ -1,6 +1,4 @@
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
-import { parse } from "./lib/mw/utils";
-import { LinkMw } from "./lib/mw";
 if (process.env.NEXT_PUBLIC_SHORT_HOSTNAME) {
     var shorthostnames = process.env.NEXT_PUBLIC_SHORT_HOSTNAME ?? 'mlinx.co'
 } else {
@@ -36,14 +34,7 @@ export default async function middleware(
     req: NextRequest,
     ev: NextFetchEvent
 ) {
-    const { domain, path, fullPath, key, fullKey } = parse(req);
-
-    if (short.includes(domain)) {
-        return LinkMw(req, ev);
-    }
-    if (main.includes(domain)) {
         return NextResponse.rewrite(
             new URL(`/home/${fullKey}`, req.url)
         );
-    }
 }
